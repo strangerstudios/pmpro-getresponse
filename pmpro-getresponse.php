@@ -3,7 +3,7 @@
 Plugin Name: PMPro GetResponse
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-Version: .1
+Version: .1.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -398,7 +398,7 @@ function pmprogr_options_page()
 		$api = new GetResponse( $api_key );
 		$ping = $api->ping();
 		
-		if($ping)		
+		if(empty($ping))		
 		{
 			/** Looks like there was an error */
 			$msg = sprintf( __( 'Sorry, but GetResponse was unable to verify your API key.</p> Please try entering your API key again.', 'pmpro-GetResponse' ), $api->errorMessage );

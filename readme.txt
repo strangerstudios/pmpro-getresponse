@@ -3,7 +3,7 @@ Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: .1
+Stable tag: .1.1
 
 Sync your WordPress users and members with MailChimp lists.
 
@@ -33,5 +33,9 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
+= .1.1 -
+* Removed some unused code.
+* Fixed ping check on the settings page.
+
 = .1 =
 * Initial version.
