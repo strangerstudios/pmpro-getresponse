@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
-Tested up to: 3.6
-Stable tag: .1.2
+Tested up to: 3.9.1
+Stable tag: .1.3
 
 Sync your WordPress users and members with GetResponse lists.
 
@@ -33,6 +33,10 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
+= .1.3 =
+* Fixed "Get one." link. Now goes to GetResponse instead of MailChimp
+* Now passing display_name if user does not have first and last names filled out.
+
 = .1.2 =
 * Removed MailChimp references in readme.
 
