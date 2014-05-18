@@ -3,7 +3,7 @@
 Plugin Name: PMPro GetResponse
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-Version: .1.2
+Version: .1.3
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -108,7 +108,7 @@ function pmprogr_pmpro_after_change_membership_level($level_id, $user_id)
 	$all_campaigns = get_option("pmprogr_all_campaigns");	
 	
 	$api = new GetResponse($options['api_key']);
-		
+
 	//should we add them to any campaigns?
 	if(!empty($options['level_' . $level_id . '_campaigns']) && !empty($options['api_key']))
 	{
@@ -120,16 +120,23 @@ function pmprogr_pmpro_after_change_membership_level($level_id, $user_id)
 		if(!empty($campaign_contacts))
 		{
 			foreach($campaign_contacts as $contact_id => $campaign_contact)
-			$api->deleteContact($contact_id);
-		}
-		
+            {
+                $response = $api->deleteContact($contact_id);
+            }
+        }
+
 		//subscribe to each campaign
 		foreach($options['level_' . $level_id . '_campaigns'] as $campaign)
-		{					
+		{
 			//echo "<hr />Trying to subscribe to " . $campaign . "...";
 			
 			//subscribe them
-			$api->addContact($campaign, trim($campaign_user->first_name . " " . $campaign_user->last_name), $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array()));	
+            if(!empty($campaign_user->first_name) && !empty($campaign_user->last_name))
+                $name = trim($campaign_user->first_name . " " . $campaign_user->last_name);
+            else
+                $name = $campaign_user->display_name;
+
+			$response = $api->addContact($campaign, $name, $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array()));
 		}
 	}
 	elseif(!empty($options['api_key']) && count($options) > 3)
@@ -152,10 +159,14 @@ function pmprogr_pmpro_after_change_membership_level($level_id, $user_id)
 			foreach($options['users_campaigns'] as $campaign)
 			{					
 				//echo "<hr />Trying to subscribe to " . $campaign . "...";
-				
-				//subscribe them
-				$api->addContact($campaign, trim($campaign_user->first_name . " " . $campaign_user->last_name), $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array()));	
-			}
+
+                if(!empty($campaign_user->first_name) && !empty($campaign_user->last_name))
+                    $name = trim($campaign_user->first_name . " " . $campaign_user->last_name);
+                else
+                    $name = $campaign_user->display_name;
+
+                $response = $api->addContact($campaign, $name, $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array()));
+            }
 		}
 		else
 		{
@@ -435,7 +446,7 @@ function pmprogr_options_page()
 		
 		<p>This plugin will integrate your site with GetResponse. You can choose one or more GetResponse campaigns to have users subscribed to when they signup for your site.</p>
 		<p>If you have <a href="http://www.paidmembershipspro.com">Paid Memberships Pro</a> installed, you can also choose one or more GetResponse campaigns to have members subscribed to for each membership level.</p>
-		<p>Don't have a GetResponse account? <a href="http://eepurl.com/k4aAH" target="_blank">Get one here</a>. It's free.</p>
+		<p>Don't have a GetResponse account? <a href="http://www.getresponse.com/" target="_blank">Get one here</a>.</p>
 		
 		<?php settings_fields('pmprogr_options'); ?>
 		<?php do_settings_sections('pmprogr_options'); ?>
