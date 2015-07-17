@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: PMPro GetResponse
+Plugin Name: Paid Memberships Pro - GetResponse Add On
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-Version: .1.2
+Version: .2
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -451,3 +451,31 @@ function pmprogr_options_page()
 </div>
 <?php
 }
+
+/*
+Function to add links to the plugin action links
+*/
+function pmprogr_add_action_links($links) {
+	
+	$new_links = array(
+			'<a href="' . get_admin_url(NULL, 'options-general.php?page=pmprogr_options') . '">Settings</a>',
+	);
+	return array_merge($new_links, $links);
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pmprogr_add_action_links');
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmprogr_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-getresponse.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-getresponse/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmprogr_plugin_row_meta', 10, 2);
