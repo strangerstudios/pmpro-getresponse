@@ -2,11 +2,7 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
-<<<<<<< HEAD
-Tested up to: 4.2.2
-=======
 Tested up to: 4.2.3
->>>>>>> master
 Stable tag: .2
 
 Sync your WordPress users and members with GetResponse lists.
