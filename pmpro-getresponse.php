@@ -3,11 +3,7 @@
 Plugin Name: Paid Memberships Pro - GetResponse Add On
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-<<<<<<< HEAD
 Version: .2
-=======
-Version: .1.3
->>>>>>> d7ba96d960a601e704723f4e21062cd5196c1bc4
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
