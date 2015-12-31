@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - GetResponse Add On
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-Version: .2
+Version: .3
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -89,7 +89,7 @@ function pmprogr_user_register($user_id)
 		$campaign_user = get_userdata($user_id);
 		
 		//subscribe to each campaign
-		$api = new GetResponse($options['api_key']);
+		$api = new GetResponse($options['api_key'], false);
 		foreach($options['users_campaigns'] as $campaign)
 		{					
 			//subscribe them
@@ -114,7 +114,7 @@ function pmprogr_pmpro_after_change_membership_level($level_id, $user_id)
 	else
 		$subscribe_to = $options['level_' . $level_id . '_campaigns'];
 	
-	$api = new GetResponse($options['api_key']);
+	$api = new GetResponse($options['api_key'], false);
 
 	//should we add them to any campaigns?
 	if(!empty($options['level_' . $level_id . '_campaigns']) && !empty($options['api_key']))
@@ -221,14 +221,14 @@ function pmprogr_subscribe($campaign_user, $campaign)
 	//echo "<hr />Trying to subscribe to " . $campaign . "...";
 	$options = get_option("pmprogr_options");
 	
-	$api = new GetResponse($options['api_key']);
+	$api = new GetResponse($options['api_key'], false);
 
 	if(!empty($campaign_user->first_name) && !empty($campaign_user->last_name))
 		$name = trim($campaign_user->first_name . " " . $campaign_user->last_name);
 	else
 		$name = $campaign_user->display_name;
 
-	$response = $api->addContact($campaign, $name, $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array()));
+	$response = $api->addContact($campaign, $name, $campaign_user->user_email, 'standard', 0, apply_filters("pmpro_getresponse_custom_fields", array(), $campaign_user));
 }
 
 //admin init. registers settings
@@ -487,13 +487,13 @@ function pmprogr_options_page()
 	if(!empty($api_key))
 	{
 		/** Ping the GetResponse API to make sure this API Key is valid */
-		$api = new GetResponse( $api_key );
+		$api = new GetResponse( $api_key, false );
 		$ping = $api->ping();
-		
+				
 		if(empty($ping))		
 		{
 			/** Looks like there was an error */
-			$msg = sprintf( __( 'Sorry, but GetResponse was unable to verify your API key.</p> Please try entering your API key again.', 'pmpro-GetResponse' ), $api->errorMessage );
+			$msg = __( 'Sorry, but GetResponse was unable to verify your API key.</p> Please try entering your API key again.', 'pmpro-GetResponse' );
 			$msgt = "error";
 			add_settings_error( 'pmpro-GetResponse', 'apikey-fail', $msg, 'error' );
 		}

@@ -38,17 +38,26 @@ class GetResponse
 	private $textOperators = array('EQUALS', 'NOT_EQUALS', 'CONTAINS', 'NOT_CONTAINS', 'MATCHES');
 	
 	/**
-	 * Check cURL extension is loaded and that an API key has been passed
+	* True to enable printing, false otherwise. Set using the constructor
+	* @var boolean
+	* @access private
+	*/
+	private $errorsOn = true;
+
+	/**
+	 * Check cURL extension is loaded and that an API key has been passed, also enables or disables error printing
 	 * @param string $apiKey GetResponse API key
+	 * @param boolean $print_errors
 	 * @return void
 	 */
-	public function __construct($apiKey = null)
+	public function __construct($apiKey = null, $print_errors = true)
 	{
 		if(!extension_loaded('curl')) trigger_error('GetResponsePHP requires PHP cURL', E_USER_ERROR);
 		if(is_null($apiKey)) trigger_error('API key must be supplied', E_USER_ERROR);
 		$this->apiKey = $apiKey;
+		$this->errorsOn = ($print_errors) ? true : false;
 	}
-	
+
 	/**
 	 * Test connection to the API, returns "pong" on success
 	 * @return string
@@ -57,7 +66,11 @@ class GetResponse
 	{
 		$request  = $this->prepRequest('ping');
 		$response = $this->execute($request);
-		return $response->ping;
+		
+		if(!empty($response) && !empty($response->ping))
+			return $response->ping;
+		else
+			return $response;
 	}
 	
 	/**
@@ -201,6 +214,21 @@ class GetResponse
 	public function getMessageContents($id)
 	{
 		$request  = $this->prepRequest('get_message_contents', array('message' => $id));
+		$response = $this->execute($request);
+		return $response;
+	}
+
+	/**
+	 * Return message statistics
+	 * @param string $message Message ID
+	 * @param string $grouping grouping
+	 * @return object|null
+	 */
+	public function getMessageStats($message, $grouping = "yearly")
+	{
+		$params['message'] = $message;
+		$params['grouping'] = $grouping;
+		$request  = $this->prepRequest('get_message_stats', $params);
 		$response = $this->execute($request);
 		return $response;
 	}
@@ -446,10 +474,19 @@ class GetResponse
 	 * @param array $customs
 	 * @return object
 	 */
-	public function addContact($campaign, $name, $email, $action = 'standard', $cycle_day = 0, $customs = array())
+	public function addContact($campaign, $name = '', $email, $action = 'standard', $cycle_day = 0, $customs = array())
 	{
-		$params = array('campaign' => $campaign, 'action' => $action, 'name' => $name,
-						'email' => $email, 'cycle_day' => $cycle_day, 'ip' => $_SERVER['REMOTE_ADDR']);
+		$params = array('campaign' => $campaign, 'action' => $action, 'email' => $email, 'cycle_day' => $cycle_day);
+	
+		if(!empty($name))
+			$params['name'] = $name;
+			
+		if($this->isValidIp($_SERVER['REMOTE_ADDR'])){
+			echo '<h2>';
+			echo $_SERVER['REMOTE_ADDR'];
+			echo '</h2>';
+			array_push($params, $_SERVER['REMOTE_ADDR']);
+		}
 		if(!empty($customs)) {
 			foreach($customs as $key => $val) $c[] = array('name' => $key, 'content' => $val);
 			$params['customs'] = $c;
@@ -506,6 +543,25 @@ class GetResponse
 		$response = $this->execute($request);
 		return $response;
 	}
+
+	/**
+	* Returns true if the supplied ip is valid, false otherwise.
+	* @param string $ip
+	* @access private
+	*/
+	private function isValidIp($ip){
+
+		if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)){
+			if(substr_count($ip, '.') == 4){
+				return true;
+			}
+		}else if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)){
+				if(substr_count($ip, ':') == 7){
+					return true;
+				}
+		}
+		return false;
+	}
 	
 	/**
 	 * Return a key => value array for text comparison
@@ -555,6 +611,10 @@ class GetResponse
 		if(!(($httpCode == '200') || ($httpCode == '204'))) trigger_error('API call failed. Server returned status code '.$httpCode, E_USER_ERROR);
 		curl_close($handle);
 		if(!$response->error) return $response->result;
+		else if($this->errorsOn){
+			var_dump($request);
+			return $response->error;
+		}
 	}
 }
 
