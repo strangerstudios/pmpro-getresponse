@@ -33,6 +33,9 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
+= .4.1 =
+* BUG: Include MemberOrder (2nd argument) when adding hook for `pmpro_after_checkout` action
+
 = .4 =
 * BUG: Fixed a PHP Warning and improving code readability
 * ENHANCEMENT: More consistent I18N support & using 'pmprogr' textdomain

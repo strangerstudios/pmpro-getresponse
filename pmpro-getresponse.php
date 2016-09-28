@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - GetResponse Add On
 Plugin URI: http://www.paidmembershipspro.com/pmpro-getresponse/
 Description: Sync your WordPress users and members with GetResponse campaigns.
-Version: .4
+Version: .4.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -61,7 +61,7 @@ function pmprogr_wp() {
 	global $post;
 	if ( ! empty( $post->post_content ) && strpos( $post->post_content, "[pmpro_checkout]" ) !== false ) {
 		remove_action( "pmpro_after_change_membership_level", "pmprogr_pmpro_after_change_membership_level" );
-		add_action( "pmpro_after_checkout", "pmprogr_pmpro_after_checkout", 15 );
+		add_action( "pmpro_after_checkout", "pmprogr_pmpro_after_checkout", 15, 2 );
 
 	}
 }
@@ -69,9 +69,13 @@ function pmprogr_wp() {
 add_action( "wp", "pmprogr_wp", 0 );
 
 //for when checking out
-function pmprogr_pmpro_after_checkout( $user_id ) {
+function pmprogr_pmpro_after_checkout( $user_id, $order ) {
 
-	$level_id = isset( $_REQUEST['level'] ) ? intval( $_REQUEST['level'] ) : null;
+	if ( !isset( $order->membership_id )  )  {
+		$level_id = isset( $_REQUEST['level'] ) ? intval( $_REQUEST['level'] ) : null;
+	} else {
+		$level_id = $order->membership_id;
+	}
 
 	if ( ! empty( $level_id ) ) {
 		pmprogr_pmpro_after_change_membership_level( $level_id, $user_id );
