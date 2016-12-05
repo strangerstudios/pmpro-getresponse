@@ -109,7 +109,7 @@ function pmprogr_pmpro_after_change_membership_level($level_id, $user_id)
 	$campaign_user = get_userdata($user_id);
 	
 	//combine level campaigns with all users campagins
-	if($options['users_campaigns'] != null)
+	if( isset( $options['users_campaigns'] ) && is_array( $options['users_campaigns'] ) && is_array( $options['level_' . $level_id . '_campaigns']) ) && !empty($options['users_campaigns']) )
 		$subscribe_to = array_unique(array_merge($options['users_campaigns'], $options['level_' . $level_id . '_campaigns']));
 	else
 		$subscribe_to = $options['level_' . $level_id . '_campaigns'];
