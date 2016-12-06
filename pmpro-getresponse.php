@@ -149,7 +149,7 @@ function pmprogr_pmpro_after_change_membership_level( $level_id, $user_id ) {
 
 			if ( ! empty( $level_id ) ) {
 				$last_level = $wpdb->get_results(
-					$wpdb->preapre( "
+					$wpdb->prepare( "
 						SELECT *
 						FROM {$wpdb->pmpro_memberships_users}
 						WHERE `user_id` = %d
@@ -344,7 +344,7 @@ function pmprogr_option_users_campaigns() {
 
 		foreach ( $pmprogr_campaigns as $key => $campaign ) { ?>
 			<option
-				value="<?php echo esc_attr( $key ) ?>" <?php echo( in_array( $key, $selected_campaigns ) ? 'selected="selected"' : null ) ?>><? echo esc_attr( $campaign->name ); ?></option>
+				value="<?php echo esc_attr( $key ) ?>" <?php echo( in_array( $key, $selected_campaigns ) ? 'selected="selected"' : null ) ?>><?php echo esc_attr( $campaign->name ); ?></option>
 			<?php
 		} ?>
 		</select><?php
@@ -390,10 +390,10 @@ function pmprogr_option_memberships_campaigns( $level ) {
 	}
 
 	if ( ! empty( $pmprogr_campaigns ) ) { ?>
-		<select multiple="multiple" name="pmprogr_options[level_<?= $level->id ?>_campaigns][]"><?php
+		<select multiple="multiple" name="pmprogr_options[level_<?php echo $level->id; ?>_campaigns][]"><?php
 		foreach ( $pmprogr_campaigns as $key => $campaign ) { ?>
 			<option
-				value="<?= esc_attr( $key ) ?>" <?php echo( in_array( $key, $selected_campaigns ) ? 'selected="selected"' : null ); ?>><?php echo esc_attr( $campaign->name ); ?></option> <?php
+				value="<?php echo esc_attr( $key ); ?>" <?php echo( in_array( $key, $selected_campaigns ) ? 'selected="selected"' : null ); ?>><?php echo esc_attr( $campaign->name ); ?></option> <?php
 		} ?>
 		</select><?php
 	} else {
