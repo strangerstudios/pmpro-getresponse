@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
-Tested up to: 4.4
-Stable tag: .3
+Tested up to: 4.5.2
+Stable tag: .4
 
 Sync your WordPress users and members with GetResponse lists.
 
@@ -33,6 +33,13 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
+= .4.1 =
+* BUG: Include MemberOrder (2nd argument) when adding hook for `pmpro_after_checkout` action
+
+= .4 =
+* BUG: Fixed a PHP Warning and improving code readability
+* ENHANCEMENT: More consistent I18N support & using 'pmprogr' textdomain
+
 = .3 =
 * BUG: Fixed some warnings and notices.
 * ENHANCEMENT: Added $campaign_user as the second parameter to the pmpro_getresponse_custom_fields filter.
