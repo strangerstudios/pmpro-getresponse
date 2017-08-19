@@ -544,11 +544,12 @@ class GetResponse
 		return $response;
 	}
 
-	/**
-	* Returns true if the supplied ip is valid, false otherwise.
-	* @param string $ip
-	* @access private
-	*/
+	 /**
+	 * Returns true if the supplied ip is valid, false otherwise.
+	 * @param string $ip
+	 * @access private
+	 * @return bool
+	 */
 	private function isValidIp($ip){
 
 		if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)){
