@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
-Tested up to: 4.5.2
-Stable tag: .4
+Tested up to: 4.8.1
+Stable tag: .4.2
 
 Sync your WordPress users and members with GetResponse lists.
 
@@ -33,6 +33,10 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
+= .4.2 =
+* BUG: Didn't include the level data in list of campaigns to subscribe a user to
+* ENHANCEMENT: Incomplete API documentation
+
 = .4.1 =
 * BUG: Include MemberOrder (2nd argument) when adding hook for `pmpro_after_checkout` action
 
