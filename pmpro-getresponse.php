@@ -371,7 +371,7 @@ function pmprogr_option_unsubscribe() {
 		<option value="1" <?php selected( $options['unsubscribe'], 1 ); ?>>Yes (Only old level lists.)</option>
 		<option value="all" <?php selected( $options['unsubscribe'], "all" ); ?>>Yes (All other lists.)</option>
 	</select>
-	<small><?php _e("Recommended: Yes. However, if you manage multiple lists in GetResponse and have users subscribe outside of	WordPress, you may want to choose No so contacts aren't unsubscribed from other lists when they register on your site.", "pmpro-getresponse"); ?>
+	<small><?php _e("Recommended: Yes. However, if you manage multiple lists in GetResponse and have users subscribe outside of WordPress, you may want to choose No so contacts aren't unsubscribed from other lists when they register on your site.", "pmpro-getresponse"); ?>
 	</small>
 	<?php
 }
@@ -506,8 +506,8 @@ function pmprogr_options_page() {
 		<form action="options.php" method="post">
 
 			<p><?php _e( "This plugin will integrate your site with GetResponse. You can choose one or more GetResponse campaigns to have users subscribed to when they signup for your site.", "pmpro-getresponse" ); ?></p>
-			<p><?php _e("If you have <a href='http://www.paidmembershipspro.com'>Paid Memberships Pro</a> installed, you can also choose one or more GetResponse campaigns to have members subscribed to for each membership level.", "pmpro-getresponse"); ?></p>
-			<p><?php _e("Don't have a GetResponse account? <a href='http://www.getresponse.com/' target='_blank'>Get one here</a>.", "pmpro-getresponse");?></p>
+			<p><?php _e( sprintf( "If you have %s installed, you can also choose one or more GetResponse campaigns to have members subscribed to for each membership level.", "<a href='http://www.paidmembershipspro.com'>" . __( 'Paid Memberships Pro', 'pmpro-getresponse') . "</a>" ), "pmpro-getresponse" ); ?></p>
+			<p><?php _e( sprintf( "Don't have a GetResponse account? %s", "<a href='http://www.getresponse.com/' target='_blank'>" . __( 'Get one here.', 'pmpro-getresponse' ) . "</a>" ), "pmpro-getresponse");?></p>
 
 			<?php settings_fields( 'pmprogr_options' ); ?>
 			<?php do_settings_sections( 'pmprogr_options' ); ?>
