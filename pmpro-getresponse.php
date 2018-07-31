@@ -531,7 +531,7 @@ Function to add links to the plugin action links
 function pmprogr_add_action_links( $links ) {
 
 	$new_links = array(
-		'<a href="' . get_admin_url( null, 'options-general.php?page=pmprogr_options' ) . '">Settings</a>',
+		'<a href="' . get_admin_url( null, 'options-general.php?page=pmprogr_options' ) . '">' . __( "Settings", "pmpro-getresponse" ) . '</a>',
 	);
 
 	return array_merge( $new_links, $links );
@@ -545,8 +545,8 @@ Function to add links to the plugin row meta
 function pmprogr_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'pmpro-getresponse.php' ) !== false ) {
 		$new_links = array(
-			'<a href="' . esc_url( 'http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-getresponse/' ) . '" title="' . esc_attr__( 'View Documentation', 'pmpro' ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url( 'http://paidmembershipspro.com/support/' ) . '" title="' . esc_attr__( 'Visit Customer Support Forum', 'pmpro' ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url( 'http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-getresponse/' ) . '" title="' . esc_attr__( 'View Documentation', 'pmpro-getresponse' ) . '">' . __( 'Docs', 'pmpro-getresponse' ) . '</a>',
+			'<a href="' . esc_url( 'http://paidmembershipspro.com/support/' ) . '" title="' . esc_attr__( 'Visit Customer Support Forum', 'pmpro-getresponse' ) . '">' . __( 'Support', 'pmpro-getresponse' ) . '</a>',
 		);
 		$links     = array_merge( $links, $new_links );
 	}
