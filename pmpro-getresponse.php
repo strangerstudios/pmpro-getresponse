@@ -48,6 +48,9 @@ function pmprogr_init() {
 	if ( ! empty( $pmprogr_levels ) ) {
 		add_action( "pmpro_after_change_membership_level", "pmprogr_pmpro_after_change_membership_level", 15, 2 );
 	}
+
+	// load the text domain for plugin.
+	load_plugin_textdomain( 'pmpro-getresponse', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
 add_action( "init", "pmprogr_init", 0 );
@@ -285,15 +288,14 @@ function pmprogr_section_levels() {
 	global $wpdb, $pmprogr_levels;
 
 	//do we have PMPro installed?
-	if ( class_exists( "MemberOrder" ) ) {
+	if ( defined( "PMPRO_VERSION" ) ) {
 		?>
-		<p>PMPro is installed.</p>
+		<p><?php _e( 'Paid Memberships Pro is installed.', 'paid-memberships-pro' ); ?></p>
 		<?php
 		//do we have levels?
 		if ( empty( $pmprogr_levels ) ) {
 			?>
-			<p><?php _e("Once you've <a href='admin.php?page=pmpro-membershiplevels'>created some levels in Paid Memberships
-					Pro</a>, you will be able to assign GetResponse campaigns to them here.", "pmpro-getresponse"); ?></p>
+			<p><?php _e( sprintf( "Once you've %s, you will be able to assign GetResponse campaigns to them here.", "<a href='admin.php?page=pmpro-membershiplevels'>" . __( 'created some levels in Paid Memberships Pro', 'pmpro-getresponse' ) . "</a>" ), 'pmpro-getresponse' ); ?></p>
 			<?php
 		} else {
 			?>
@@ -305,15 +307,13 @@ function pmprogr_section_levels() {
 		if ( file_exists( dirname( __FILE__ ) . "/../paid-memberships-pro/paid-memberships-pro.php" ) ) {
 			//just deactivated
 			?>
-			<p><?php _e("<a href='plugins.php?plugin_status=inactive'>Activate Paid Memberships Pro</a> to add membership
-				functionality to your site and finer control over your GetResponse campaigns.", "pmpro-getresponse"); ?></p>
+			<p><?php _e( sprintf( "%s to add membership functionality to your site and finer control over your GetResponse campaigns.", "<a href='plugins.php?plugin_status=inactive'>" . __( 'Activate Paid Memberships Pro', 'pmpro-getresponse' ) . "</a>" ), "pmpro-getresponse"); ?></p>
 			<?php
 		} else {
 			//needs to be installed
 			?>
 			<p>
-				<?php _e("<a href='plugin-install.php?tab=search&type=term&s=paid+memberships+pro&plugin-search-input=Search+Plugins'>Install Paid Memberships Pro</a> to add membership functionality to your site and finer control over your
-				GetResponse campaigns.", "pmpro-getresponse"); ?></p>
+				<?php _e( sprintf( "%s to add membership functionality to your site and finer control over your GetResponse campaigns.", "<a href='plugin-install.php?tab=search&type=term&s=paid+memberships+pro&plugin-search-input=Search+Plugins'>" . __( "Install Paid Memberships Pro", "pmpro-getresponse") . "</a>" ), "pmpro-getresponse" )?></p>
 			<?php
 		}
 	}
@@ -354,7 +354,7 @@ function pmprogr_option_users_campaigns() {
 		} ?>
 		</select><?php
 	} else {
-		echo "No campaigns found.";
+		_e( "No campaigns found.", "pmpro-getresponse" );
 	}
 }
 
@@ -376,9 +376,7 @@ function pmprogr_option_unsubscribe() {
 		<option value="1" <?php selected( $options['unsubscribe'], 1 ); ?>>Yes (Only old level lists.)</option>
 		<option value="all" <?php selected( $options['unsubscribe'], "all" ); ?>>Yes (All other lists.)</option>
 	</select>
-	<small><?php _e("Recommended: Yes. However, if you manage multiple lists in GetResponse and have users subscribe outside of
-		WordPress, you may want to choose No so contacts aren't unsubscribed from other lists when they register on your
-		site.", "pmpro-getresponse"); ?>
+	<small><?php _e("Recommended: Yes. However, if you manage multiple lists in GetResponse and have users subscribe outside of WordPress, you may want to choose No so contacts aren't unsubscribed from other lists when they register on your site.", "pmpro-getresponse"); ?>
 	</small>
 	<?php
 }
@@ -402,7 +400,7 @@ function pmprogr_option_memberships_campaigns( $level ) {
 		} ?>
 		</select><?php
 	} else {
-		echo _e("No campaigns found.", "pmpro-getresponse");
+		_e( "No campaigns found.", "pmpro-getresponse" );
 	}
 }
 
@@ -481,7 +479,7 @@ function pmprogr_options_page() {
 
 		if ( empty( $ping ) ) {
 			/** Looks like there was an error */
-			$msg  = __( 'Sorry, but GetResponse was unable to verify your API key.</p> Please try entering your API key again.', 'pmpro-getresponse' );
+			$msg  = __( 'Sorry, but GetResponse was unable to verify your API key. Please try entering your API key again.', 'pmpro-getresponse' );
 			$msgt = "error";
 			add_settings_error( 'pmpro-GetResponse', 'apikey-fail', $msg, $msgt );
 		} else {
@@ -512,11 +510,9 @@ function pmprogr_options_page() {
 
 		<form action="options.php" method="post">
 
-			<p><?php _e("This plugin will integrate your site with GetResponse. You can choose one or more GetResponse campaigns
-				to have users subscribed to when they signup for your site.", "pmpro-getresponse"); ?></p>
-			<p><?php _e("If you have <a href='http://www.paidmembershipspro.com'>Paid Memberships Pro</a> installed, you can also
-				choose one or more GetResponse campaigns to have members subscribed to for each membership level.", "pmpro-getresponse"); ?></p>
-			<p><?php _e("Don't have a GetResponse account? <a href='http://www.getresponse.com/' target='_blank'>Get one here</a>.", "pmpro-getresponse");?></p>
+			<p><?php _e( "This plugin will integrate your site with GetResponse. You can choose one or more GetResponse campaigns to have users subscribed to when they signup for your site.", "pmpro-getresponse" ); ?></p>
+			<p><?php _e( sprintf( "If you have %s installed, you can also choose one or more GetResponse campaigns to have members subscribed to for each membership level.", "<a href='http://www.paidmembershipspro.com'>" . __( 'Paid Memberships Pro', 'pmpro-getresponse') . "</a>" ), "pmpro-getresponse" ); ?></p>
+			<p><?php _e( sprintf( "Don't have a GetResponse account? %s", "<a href='http://www.getresponse.com/' target='_blank'>" . __( 'Get one here.', 'pmpro-getresponse' ) . "</a>" ), "pmpro-getresponse");?></p>
 
 			<?php settings_fields( 'pmprogr_options' ); ?>
 			<?php do_settings_sections( 'pmprogr_options' ); ?>
@@ -540,7 +536,7 @@ Function to add links to the plugin action links
 function pmprogr_add_action_links( $links ) {
 
 	$new_links = array(
-		'<a href="' . get_admin_url( null, 'options-general.php?page=pmprogr_options' ) . '">Settings</a>',
+		'<a href="' . get_admin_url( null, 'options-general.php?page=pmprogr_options' ) . '">' . __( "Settings", "pmpro-getresponse" ) . '</a>',
 	);
 
 	return array_merge( $new_links, $links );
@@ -554,8 +550,8 @@ Function to add links to the plugin row meta
 function pmprogr_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'pmpro-getresponse.php' ) !== false ) {
 		$new_links = array(
-			'<a href="' . esc_url( 'http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-getresponse/' ) . '" title="' . esc_attr__( 'View Documentation', 'pmpro' ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url( 'http://paidmembershipspro.com/support/' ) . '" title="' . esc_attr__( 'Visit Customer Support Forum', 'pmpro' ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url( 'http://www.paidmembershipspro.com/add-ons/third-party-integration/pmpro-getresponse/' ) . '" title="' . esc_attr__( 'View Documentation', 'pmpro-getresponse' ) . '">' . __( 'Docs', 'pmpro-getresponse' ) . '</a>',
+			'<a href="' . esc_url( 'http://paidmembershipspro.com/support/' ) . '" title="' . esc_attr__( 'Visit Customer Support Forum', 'pmpro-getresponse' ) . '">' . __( 'Support', 'pmpro-getresponse' ) . '</a>',
 		);
 		$links     = array_merge( $links, $new_links );
 	}
