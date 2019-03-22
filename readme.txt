@@ -33,8 +33,10 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
-= .4.3 =
-* BUG: Making sure there is a user to update in pmprogr_pmpro_after_change_membership_level().
+= .4.3 - 2019-03-22 =
+* BUG FIX: Making sure there is a user to update in pmprogr_pmpro_after_change_membership_level().
+* BUG FIX: Avoiding errors when PMPro is deactivated.
+* FEATURE: Localized strings for translation and generated a .pot file.
 
 = .4.2 =
 * BUG: Didn't include the level data in list of campaigns to subscribe a user to
@@ -68,3 +70,7 @@ Please visit our premium support site at http://www.paidmembershipspro.com for m
 
 = .1 =
 * Initial version.
+
+== Upgrade Notice ==
+= .3 =
+* Please update to version .3 to avoid a serious bug where users could be erroneously unsubscribed from your lists.
