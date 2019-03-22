@@ -110,6 +110,11 @@ function pmprogr_pmpro_after_change_membership_level( $level_id, $user_id ) {
 	$options       = get_option( "pmprogr_options" );
 	$all_campaigns = get_option( "pmprogr_all_campaigns" );
 	$campaign_user = get_userdata( $user_id );
+	
+	// Make sure we have a user to update.
+	if( empty( $campaign_user) ) {
+		return false;
+	}
 
 	$subscribe_to   = !empty( $options["level_{$level_id}_campaigns"] ) ? $options["level_{$level_id}_campaigns"] : array();
 	$user_campaigns = !empty( $options['users_campaigns'] ) ? $options['users_campaigns'] : array();
