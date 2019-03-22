@@ -3,7 +3,7 @@ Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, getresponse, get response, email marketing
 Requires at least: 3.1
 Tested up to: 5.1.1
-Stable tag: .4.3
+Stable tag: .5
 
 Sync your WordPress users and members with GetResponse lists.
 
@@ -33,7 +33,7 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 Please visit our premium support site at http://www.paidmembershipspro.com for more documentation and our support forums.
 
 == Changelog ==
-= .4.3 - 2019-03-22 =
+= .5 - 2019-03-22 =
 * BUG FIX: Making sure there is a user to update in pmprogr_pmpro_after_change_membership_level().
 * BUG FIX: Avoiding errors when PMPro is deactivated.
 * FEATURE: Localized strings for translation and generated a .pot file.
@@ -72,5 +72,5 @@ Please visit our premium support site at http://www.paidmembershipspro.com for m
 * Initial version.
 
 == Upgrade Notice ==
-= .3 =
-* Please update to version .3 to avoid a serious bug where users could be erroneously unsubscribed from your lists.
+= .5 =
+* Please update to version .5 to avoid a serious bug where users could be erroneously unsubscribed from your lists.
