@@ -273,7 +273,14 @@ add_action( "admin_init", "pmprogr_admin_init" );
 //set the pmprogr_levels array if PMPro is installed
 function pmprogr_getPMProLevels() {
 	global $pmprogr_levels, $wpdb;
-	$pmprogr_levels = $wpdb->get_results( "SELECT * FROM $wpdb->pmpro_membership_levels ORDER BY id" );
+	
+	if ( ! empty( $wpdb->pmpro_membership_levels ) )  {
+		$pmprogr_levels = $wpdb->get_results( "SELECT * FROM $wpdb->pmpro_membership_levels ORDER BY id" );
+	} else {
+		return false;
+	}
+	
+	return $pmprogr_levels;
 }
 
 //options sections
