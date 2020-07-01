@@ -11,6 +11,8 @@ If Paid Memberships Pro is installed you can sync users by membership level, oth
 
 == Description ==
 
+Note: This plugin was developed to support an older version of the third-party API and will not work with the latest version of GetResponse. We are keeping it here for archive reasons and in case future development occurs. If you would like to add a vote to have this worked on, please use our [contact form](https://www.paidmembershipspro.com/contact/). As an alternative, you can consider using the [Zapier Integration](https://www.paidmembershipspro.com/add-ons/pmpro-zapier/).
+
 Sync your WordPress users and members with GetResponse lists.
 
 If Paid Memberships Pro is installed you can sync users by membership level, otherwise all users can be synced to one or more lists.
